@@ -26,6 +26,8 @@ def initialize_main_window():
 
 def show_random_answer():
     def switch_colors():
+        if not left_frame.winfo_exists() or not right_frame.winfo_exists():
+            return
         hover_color(left_frame)
         hover_color(right_frame)
         main.update()
@@ -35,18 +37,27 @@ def show_random_answer():
             display_answer()
 
     def display_answer():
-        left_frame.pack_forget()
-        right_frame.pack_forget()
+        left_frame.destroy()
+        right_frame.destroy()
         answer = random.choice(["Yes", "No"])
         answer_label = ctk.CTkLabel(main, text=answer, font=("Arial", 250), fg_color="black")
         answer_label.pack(side="top", fill="both", expand=True)
         answer_label.bind("<Button-1>", lambda event: reset_main_window(answer_label))
 
+    left_frame.unbind("<Button-1>")
+    left_frame.unbind("<Enter>")
+    left_frame.unbind("<Leave>")
+    right_frame.unbind("<Button-1>")
+    right_frame.unbind("<Enter>")
+    right_frame.unbind("<Leave>")
+    left_frame.bind("<Button-1>", lambda event: display_answer())
+    right_frame.bind("<Button-1>", lambda event: display_answer())
+
     start_time = time.time()
     switch_colors()
 
 def reset_main_window(answer_label):
-    answer_label.pack_forget()
+    answer_label.destroy()
     initialize_main_window()
 
 def hover_color(frame):
