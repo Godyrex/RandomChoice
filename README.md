@@ -13,7 +13,6 @@ This is a simple fun Python application using `customtkinter` that helps you dec
 1. Clone the repository:
     ```sh
     git clone https://github.com/Godyrex/RandomChoice.git
-    cd should-i-do-it
     ```
 
 2. Install the required dependencies:
